@@ -30,7 +30,11 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------
 // Log string to Journal
 //-----------------------------------------------------------------------------------------------------------------------------------------
-#define LOG(s) Print(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s);  Comment(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s);
+#ifdef _DEBUG
+   #define LOG(s) Sleep(1);
+#else
+   #define LOG(s) Print(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s);  Comment(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s);
+#endif
 
 #property strict
 
