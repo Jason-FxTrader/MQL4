@@ -12,6 +12,7 @@ void Error_Manage(int retrycnt)
 //Please see the list below for the most common MT4 error code listings returned from trade server. which includes a complete listing of MT4 error codes and MQL4 Run Time Error Codes
 //All retries up to a limit, then if the error does not disappear, all attempts to trade must be stopped, the program logic must be changed.
 LOG(Error_Get());
+Print(Error_Get());
 #define MAXRETRIES 10
    if (retrycnt >= MAXRETRIES)
       WAIT_FOR_USER_INTERVENTION();

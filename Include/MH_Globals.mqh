@@ -26,14 +26,14 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-#define _DEBUG
+#undef _DEBUG
 //-----------------------------------------------------------------------------------------------------------------------------------------
 // Log string to Journal
 //-----------------------------------------------------------------------------------------------------------------------------------------
 #ifdef _DEBUG
-   #define LOG(s) Sleep(1);
+   #define LOG(s) Print(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s)
 #else
-   #define LOG(s) Print(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s);  Comment(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s);
+   #define LOG(s) Sleep(1)   //Dummy as strategy tester does not sleep
 #endif
 
 #property strict
