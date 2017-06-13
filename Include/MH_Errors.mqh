@@ -104,7 +104,7 @@ void WAIT_FOR_USER_INTERVENTION()
       Print("UNRECOVERABLE ERROR, WAITING FOR USER INTERVENTION");
       if (IsTesting())
       {
-         for (int i=0; i< 1000000000; i++) //dummy sleep
+         for (int i=0; i< 1000000000; i++) //dummy sleep as StrategyTester doesn't execute Sleep
             ;
       }
       else
