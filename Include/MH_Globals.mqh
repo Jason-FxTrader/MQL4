@@ -51,8 +51,8 @@
 extern double OB = 80; //Overbought level
 extern double OS = 20; //Oversold level
 extern int K = 13;
-extern int D = 8;
-extern int slowing=8;
+extern int D = 4;
+extern int slowing=9;
 extern int SwingHigh=10;      //Lookback period for SwingHigh
 extern int EntryCondS1 = 49;
 extern double RiskRatio = 0.03;      //3% Maximum capital exposure on any one trade - Miner p.159
