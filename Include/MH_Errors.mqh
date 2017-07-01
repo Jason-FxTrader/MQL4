@@ -15,7 +15,7 @@ LOG(Error_Get());
 Print(Error_Get());
 #define MAXRETRIES 10
    if (retrycnt >= MAXRETRIES)
-      WAIT_FOR_USER_INTERVENTION();
+      Terminal_Close();
    else
       switch (GetLastError())
       {      
@@ -91,25 +91,26 @@ Print(Error_Get());
          case ERR_TRADE_PROHIBITED_BY_FIFO:     //150	An attempt to close a symbol position contravening the FIFO rule. First earlier existing position(s) should be closed, all attempts of such trade operations must be stopped, or the program logic must be changed.
          case ERR_TRADE_EXPIRATION_DENIED:      //147	MH CHECKED: SHOULD NOT GET THIS AS I SET EXPIRATION TO 0: The use of pending order expiration date has been denied by the broker. The operation can only be repeated if the expiration parameter has been zeroed. (Pending order expiration time can be disabled in some trade servers. In this case, when a non-zero value is specified in the expiration parameter, the error 147 (ERR_TRADE_EXPIRATION_DENIED) will be generated.)
          default: //unrecoverable error
-            WAIT_FOR_USER_INTERVENTION();
+            Terminal_Close();
             break;
       }
 }
 
-void WAIT_FOR_USER_INTERVENTION()
+void Terminal_Close()
 {
 //TODO:   DELETE/CLOSE ALL ORDERS
-   while(TRUE)
-   {
-      Print("UNRECOVERABLE ERROR, WAITING FOR USER INTERVENTION");
-      if (IsTesting())
-      {
-         for (int i=0; i< 1000000000; i++) //dummy sleep as StrategyTester doesn't execute Sleep
-            ;
-      }
-      else
-         Sleep(1000);
-   }
+TerminalClose(GetLastError());
+   //while(TRUE)
+   //{
+   //   Print("UNRECOVERABLE ERROR, WAITING FOR USER INTERVENTION");
+   //   if (IsTesting())
+   //   {
+   //      for (int i=0; i< 1000000000; i++) //dummy sleep as StrategyTester doesn't execute Sleep
+   //         ;
+   //   }
+   //   else
+   //      Sleep(1000);
+   //}
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------

@@ -26,15 +26,16 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-#undef _DEBUG
 //-----------------------------------------------------------------------------------------------------------------------------------------
 // Log string to Journal
 //-----------------------------------------------------------------------------------------------------------------------------------------
-#ifdef _DEBUG
-   #define LOG(s) Print(TimeToStr(TimeCurrent(),TIME_SECONDS), ": ", __FILE__, ": ", __LINE__, ": ", __FUNCSIG__, ": ", s)
-#else
-   #define LOG(s) Sleep(1)   //Dummy as strategy tester does not sleep
-#endif
+void Log(string file, int line, string fn, string s)
+{
+   if (debug)
+      Print(TimeToStr(TimeCurrent(),TIME_SECONDS) + file +": "+(string)line + ": " + fn +": " + s);
+}
+
+#define LOG(s) Log(__FILE__, __LINE__, __FUNCSIG__, s)
 
 #property strict
 
@@ -48,11 +49,12 @@
 //Pass	Profit	Total trades	Profit factor	Expected Payoff	Drawdown $	Drawdown %
 //174	   54660.78	81	            5.65	         674.82	         6134.91	   25.12%	0.00000000	K=12 	D=13 	slowing=9	EntryCondS1=49 OB=75 	OS=25 	SwingHigh=10 	RiskRatio=0.03 	RiskRatioTotal=0.06 	BaseTimeFrame=5
 //6	   22220.84	330	         1.49	         67.34	            27183.40	   78.82%	0.00000000	K=15 	D=6 	slowing=7 	EntryCondS1=2	OB=75 	OS=25 	SwingHigh=10 	RiskRatio=0.03 	RiskRatioTotal=0.06 	BaseTimeFrame=-1
+extern bool debug = FALSE;  //enable debugging output
 extern double OB = 80; //Overbought level
 extern double OS = 20; //Oversold level
-extern int K = 13;
-extern int D = 4;
-extern int slowing=9;
+extern int K = 14;
+extern int D = 9;
+extern int slowing=12;
 extern int SwingHigh=10;      //Lookback period for SwingHigh
 extern int EntryCondS1 = 49;
 extern double RiskRatio = 0.03;      //3% Maximum capital exposure on any one trade - Miner p.159
@@ -82,3 +84,5 @@ int SubWin = 1;   //subwindow
 
 CDictionary TradeUnits();        //Live Trades reflecting Opened (Market) or Pending Orders
 CDictionary TradeUnitsHistory(); //History Trades reflecting Closed Market Orders or Cancelled (Deleted) Pending Orders
+
+string Month[]= {NULL, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};

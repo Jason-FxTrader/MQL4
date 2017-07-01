@@ -1,10 +1,10 @@
 //+------------------------------------------------------------------+
 //|                                                       ZigZag.mq4 |
 //|                   Copyright 2006-2014, MetaQuotes Software Corp. |
-//|                                              http://www.mql4.com |
+//|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 #property copyright "2006-2014, MetaQuotes Software Corp."
-#property link      "http://www.mql4.com"
+#property link      "https://www.mql5.com"
 #property strict
 
 #property indicator_chart_window
@@ -54,9 +54,9 @@ int OnCalculate(const int rates_total,
                 const double &high[],
                 const double &low[],
                 const double &close[],
-                const long& tick_volume[],
-                const long& volume[],
-                const int& spread[])
+                const long &tick_volume[],
+                const long &volume[],
+                const int &spread[])
   {
    int    i,limit,counterZ,whatlookfor=0;
    int    back,pos,lasthighpos=0,lastlowpos=0;
@@ -68,7 +68,7 @@ int OnCalculate(const int rates_total,
 //--- first calculations
    if(prev_calculated==0)
       limit=InitializeAll();
-   else 
+   else
      {
       //--- find first extremum in the depth ExtLevel or 100 last bars
       i=counterZ=0;
@@ -86,7 +86,7 @@ int OnCalculate(const int rates_total,
          //--- set start position to found extremum position
          limit=i-1;
          //--- what kind of extremum?
-         if(ExtLowBuffer[i]!=0.0) 
+         if(ExtLowBuffer[i]!=0.0)
            {
             //--- low extremum
             curlow=ExtLowBuffer[i];
@@ -101,9 +101,9 @@ int OnCalculate(const int rates_total,
             whatlookfor=-1;
            }
          //--- clear the rest data
-         for(i=limit-1; i>=0; i--)  
+         for(i=limit-1; i>=0; i--)
            {
-            ExtZigzagBuffer[i]=0.0;  
+            ExtZigzagBuffer[i]=0.0;
             ExtLowBuffer[i]=0.0;
             ExtHighBuffer[i]=0.0;
            }
@@ -117,10 +117,10 @@ int OnCalculate(const int rates_total,
       //--- this lowest has been found previously
       if(extremum==lastlow)
          extremum=0.0;
-      else 
-        { 
+      else
+        {
          //--- new last low
-         lastlow=extremum; 
+         lastlow=extremum;
          //--- discard extremum if current low is too high
          if(low[i]-extremum>InpDeviation*Point)
             extremum=0.0;
@@ -131,10 +131,10 @@ int OnCalculate(const int rates_total,
               {
                pos=i+back;
                if(ExtLowBuffer[pos]!=0 && ExtLowBuffer[pos]>extremum)
-                  ExtLowBuffer[pos]=0.0; 
+                  ExtLowBuffer[pos]=0.0;
               }
            }
-        } 
+        }
       //--- found extremum is current low
       if(low[i]==extremum)
          ExtLowBuffer[i]=extremum;
@@ -145,7 +145,7 @@ int OnCalculate(const int rates_total,
       //--- this highest has been found previously
       if(extremum==lasthigh)
          extremum=0.0;
-      else 
+      else
         {
          //--- new last high
          lasthigh=extremum;
@@ -159,8 +159,8 @@ int OnCalculate(const int rates_total,
               {
                pos=i+back;
                if(ExtHighBuffer[pos]!=0 && ExtHighBuffer[pos]<extremum)
-                  ExtHighBuffer[pos]=0.0; 
-              } 
+                  ExtHighBuffer[pos]=0.0;
+              }
            }
         }
       //--- found extremum is current high
@@ -173,7 +173,7 @@ int OnCalculate(const int rates_total,
    if(whatlookfor==0)
      {
       lastlow=0.0;
-      lasthigh=0.0;  
+      lasthigh=0.0;
      }
    else
      {
@@ -202,7 +202,7 @@ int OnCalculate(const int rates_total,
                   ExtZigzagBuffer[i]=lastlow;
                  }
               }
-             break;  
+            break;
          case 1: // look for peak
             if(ExtLowBuffer[i]!=0.0 && ExtLowBuffer[i]<lastlow && ExtHighBuffer[i]==0.0)
               {
@@ -217,8 +217,8 @@ int OnCalculate(const int rates_total,
                lasthighpos=i;
                ExtZigzagBuffer[i]=lasthigh;
                whatlookfor=-1;
-              }   
-            break;               
+              }
+            break;
          case -1: // look for lawn
             if(ExtHighBuffer[i]!=0.0 && ExtHighBuffer[i]>lasthigh && ExtLowBuffer[i]==0.0)
               {
@@ -233,8 +233,8 @@ int OnCalculate(const int rates_total,
                lastlowpos=i;
                ExtZigzagBuffer[i]=lastlow;
                whatlookfor=1;
-              }   
-            break;               
+              }
+            break;
         }
      }
 //--- done
